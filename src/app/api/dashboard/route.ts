@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import UserModel from "@/models/user.model";
-import { verifyAuth, UserJWTPaylaod } from "@/utils/auth";
+import { verifyAuth } from "@/utils/auth";
 import { UserDocument } from "@/models/user.model";
 
 export async function GET(request: NextRequest): Promise<NextResponse> {
