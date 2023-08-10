@@ -1,0 +1,64 @@
+.form {
+  text-align: left;
+}
+
+.switchAuthContainer {
+  font-size: var(--regular-font-size);
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  background-color: var(--background-color-light);
+  border: none;
+  border-radius: var(--border-radius);
+  outline: var(--outline-light);
+}
+
+.title {
+  font-size: var(--title-font-size);
+  padding: 15px 0;
+  font-weight: 100;
+  text-align: center;
+}
+
+.inputsContainer {
+  background-color: var(--background-darkcolor-light);
+  outline: var(--outline-light);
+  border-radius: 0.3rem;
+  padding: 16px;
+}
+
+.inputBlock {
+  padding: 2px 0 20px 0;
+}
+
+.label {
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.input,
+.button {
+  width: 100%;
+  padding: 7px 16px;
+  border-radius: var(--border-radius);
+  border: none;
+  outline: var(--outline-light);
+  background-color: var(--background-color-light);
+  transition: all 0.15s;
+}
+
+.button {
+  font-weight: var(--subtitle-font-weight);
+  color: var(--text-color-dark);
+  background-color: var(--seccondary-color);
+  outline: none;
+  margin-top: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.input:focus {
+  outline: 2px solid var(--main-color);
+}

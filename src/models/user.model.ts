@@ -1,11 +1,4 @@
-import { Schema, model, models } from "mongoose";
-
-export interface UserInterface {
-  _id: string;
-  name: string;
-  password: string;
-  __v: number;
-}
+import { InferSchemaType, Schema, model, models } from "mongoose";
 
 const userSchema = new Schema({
   name: {
@@ -23,6 +16,13 @@ const userSchema = new Schema({
   },
 });
 
-const UserModel = models["user"] ?? model("user", userSchema, "users");
+export type UserSchema = InferSchemaType<typeof userSchema>;
+export interface UserDocument extends UserSchema {
+  _id: string;
+  __v: number;
+}
+
+const UserModel =
+  models["user"] ?? model<UserSchema>("user", userSchema, "users");
 
 export default UserModel;

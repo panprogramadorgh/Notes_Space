@@ -1,18 +1,18 @@
-import UserModel, { UserInterface } from "@/models/user.model";
-import connectDB from "@/utils/connectDB";
 import { NextResponse } from "next/server";
 import { compareSync as comparePassword } from "bcryptjs";
 import jwt from "jsonwebtoken";
-import { LoginResponse } from "./types";
-
-const SECRET = process.env.SECRET;
-if (!SECRET) throw new Error("SECRET enviroment variable is required");
+import UserModel, { UserDocument } from "@/models/user.model";
+import connectDB from "@/utils/connectDB";
+import { getSecretKey } from "@/utils/auth";
+import type { LoginResponse } from "./types";
 
 export async function POST(request: Request) {
-  // database connection checking
+  // connecting to database
   if ((await connectDB()) === false) {
-    const response: LoginResponse = { error: "Error connecting to database" };
-    return NextResponse.json(response, { status: 500 });
+    return NextResponse.json(
+      { error: "Error connecting to database" },
+      { status: 500 }
+    );
   }
   // checking fields and specially password
   const { name, password } = await request.json();
@@ -23,9 +23,9 @@ export async function POST(request: Request) {
     const response: LoginResponse = { error: "Password is required" };
     return NextResponse.json(response, { status: 400 });
   }
-  const user: UserInterface | null = await UserModel.findOne({ name });
+  const user: UserDocument | null = await UserModel.findOne({ name });
   const passwordIsCorrect =
-    user === null ? false : comparePassword(password, user.password);
+    user === null ? false : comparePassword(password, user.password!);
   if (!passwordIsCorrect) {
     const response: LoginResponse = {
       error: "Name or password are invalid",
@@ -37,7 +37,7 @@ export async function POST(request: Request) {
   const tokenData = {
     userId: user!._id,
   };
-  const token = jwt.sign(tokenData, SECRET as string);
+  const token = jwt.sign(tokenData, getSecretKey());
 
   const response: LoginResponse = {
     message: {

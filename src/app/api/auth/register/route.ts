@@ -4,13 +4,13 @@ import connectDB from "@/utils/connectDB";
 import { hashSync as hashPassword } from "bcryptjs";
 
 export async function POST(request: Request) {
-  // conectando a la base de datos
-  if ((await connectDB()) === false)
+  // connecting to database
+  if ((await connectDB()) === false) {
     return NextResponse.json(
       { error: "Error connecting to database" },
       { status: 500 }
     );
-
+  }
   // agarrando el cuerpo de la request
   const { name, password } = await request.json();
 

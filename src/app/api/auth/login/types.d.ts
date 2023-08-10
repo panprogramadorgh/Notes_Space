@@ -1,10 +1,10 @@
-import { UserInterface } from "@/models/user.model";
+import { UserDocument } from "@/models/user.model";
 
 export interface LoginResponse {
   error?: string;
   message?: {
     text: string;
-    user: UserInterface;
+    user: UserDocument;
     token: string;
   };
 }
