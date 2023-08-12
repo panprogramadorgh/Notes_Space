@@ -1,6 +1,7 @@
 :root {
   --background-color-light: #fff;
   --background-darkcolor-light: #f6f8fa;
+  --background-ultradarkcolor-light: #e7eaed;
 
   --text-color-light: #565656;
   --text-darkcolor-light: #1d1d1d;
@@ -11,7 +12,8 @@
   --main-color: #2e7bff;
   --seccondary-color: #1f883d;
 
-  --outline-light: 1px solid #d5d9e1;
+  --outline-color-light: #d5d9e1;
+  --outline-light: 1px solid var(--outline-color-light);
   --border-radius: 0.3rem;
 
   --title-font-size: 1.8rem;
@@ -22,7 +24,7 @@
   --title-font-weight: 800;
   --subtitle-font-weight: 600;
   --regular-font-weight: 400;
-  --small-font-weight: 400;
+  --small-font-weight: 300;
 }
 
 * {
@@ -51,4 +53,31 @@ a {
 }
 a:hover {
   text-decoration: underline;
+}
+
+input,
+button {
+  border-radius: var(--border-radius);
+  border: none;
+  outline: var(--outline-light);
+  font-size: var(--regular-font-size);
+  padding: 7px 12px;
+  transition: outline 0.15s;
+}
+button {
+  background-color: var(--seccondary-color);
+  outline: none;
+  color: var(--text-color-dark);
+  font-weight: var(--subtitle-font-weight);
+  user-select: none;
+  cursor: pointer;
+}
+label {
+  font-size: var(--small-font-size);
+  font-weight: var(--small-font-size);
+  color: var(--text-color-light);
+  user-select: none;
+}
+input:focus {
+  outline: 2px solid var(--main-color);
 }

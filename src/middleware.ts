@@ -2,16 +2,22 @@ import { NextResponse, NextRequest } from "next/server";
 import { verifyAuth } from "./utils/auth";
 
 export async function middleware(request: NextRequest) {
-  const response = NextResponse.next();
-
   const token = request.cookies.get("token")?.value;
   const verifiedToken =
     token && (await verifyAuth(token).catch((err) => console.error(err)));
 
-  if (!verifiedToken && request.nextUrl.pathname.startsWith("/dashboard")) {
+  const response = NextResponse.next();
+
+  if (
+    !verifiedToken &&
+    (request.nextUrl.pathname.startsWith("/dashboard") ||
+      request.nextUrl.pathname.startsWith("/chats"))
+  ) {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
-
+  if (request.nextUrl.pathname === "/auth") {
+    return NextResponse.redirect(new URL("/auth/login", request.url));
+  }
   if (verifiedToken && request.nextUrl.pathname.startsWith("/auth")) {
     response.cookies.delete("token");
   }
@@ -20,5 +26,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/api/auth/:path*", "/auth/:path*", "/dashboard/:path*"],
+  matcher: ["/auth/:path*", "/dashboard", "/chats"],
 };

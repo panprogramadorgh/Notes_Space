@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import UserModel from "@/models/user.model";
+import { findUsers } from "@/utils/crud";
 import connectDB from "@/utils/connectDB";
 
 export async function GET() {
@@ -10,7 +10,7 @@ export async function GET() {
       { status: 500 }
     );
   }
-  const rawUsers = await UserModel.find();
+  const rawUsers = await findUsers({});
   const users = rawUsers.map((rawUser) => {
     return {
       name: rawUser.name,

@@ -3,16 +3,20 @@ import { InferSchemaType, Schema, model, models } from "mongoose";
 const userSchema = new Schema({
   name: {
     type: String,
-    requied: [true, "Name is required"],
-    unique: [true, "Name already exists"],
-    min: [3, "The name must have 3 characters at least"],
-    max: [20, "Name must have a length between 3 and 20 chars"],
+    requied: [true, "name is required"],
+    unique: [true, "name already exists"],
+    min: [3, "the name must have 3 characters at least"],
+    max: [20, "name must have a length between 3 and 20 chars"],
   },
   password: {
     type: String,
-    requied: [true, "Password is required"],
+    requied: [true, "password is required"],
     unique: false,
-    min: [6, "The Password must have 6 characters at least"],
+    min: [6, "the Password must have 6 characters at least"],
+  },
+  chats: {
+    type: [String],
+    required: [true, "user must have chats property"],
   },
 });
 

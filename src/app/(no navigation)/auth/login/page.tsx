@@ -1,5 +1,7 @@
 "use client";
 
+// react y next
+import { useRouter } from "next/navigation";
 // components
 import AuthCard from "../AuthCard";
 // libs
@@ -10,6 +12,7 @@ import { createCookie } from "@/utils/cookies";
 import type { LoginResponse } from "@/app/api/auth/login/types";
 
 export default function Login() {
+  const router = useRouter();
   return (
     <AuthCard
       type="login"
@@ -25,21 +28,25 @@ export default function Login() {
           const response = await axios.post("/api/auth/login", formData);
           const loginResponse: LoginResponse = response.data;
           if (loginResponse.message && !loginResponse.error) {
-            console.log({ message: loginResponse.message!.text });
-            setResponseCardData(null);
-            // creando cookie con los datos de la sesion
+            setResponseCardData({
+              success: true,
+              message: loginResponse.message!.text,
+              closeCardCallback: () => {
+                setResponseCardData(null);
+              },
+            });
             createCookie({
               name: "token",
               value: loginResponse.message!.token,
               maxAge: 86400,
             });
-            // redireccionando a la pagina home
-            window.location.href = "/";
+            router.push("/");
           }
         } catch (error) {
           if (error instanceof axios.AxiosError) {
             const loginResponse: LoginResponse = error.response?.data;
             setResponseCardData({
+              success: false,
               message: loginResponse.error!,
               closeCardCallback: () => {
                 setResponseCardData(null);

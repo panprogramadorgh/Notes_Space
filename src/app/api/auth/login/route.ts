@@ -1,9 +1,10 @@
 import { NextResponse } from "next/server";
 import { compareSync as comparePassword } from "bcryptjs";
 import jwt from "jsonwebtoken";
-import UserModel, { UserDocument } from "@/models/user.model";
+import { UserDocument } from "@/models/user.model";
 import connectDB from "@/utils/connectDB";
 import { getSecretKey } from "@/utils/auth";
+import { findUser } from "@/utils/crud";
 import type { LoginResponse } from "./types";
 
 export async function POST(request: Request) {
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
     const response: LoginResponse = { error: "Password is required" };
     return NextResponse.json(response, { status: 400 });
   }
-  const user: UserDocument | null = await UserModel.findOne({ name });
+  const user: UserDocument | null = await findUser({ name });
   const passwordIsCorrect =
     user === null ? false : comparePassword(password, user.password!);
   if (!passwordIsCorrect) {

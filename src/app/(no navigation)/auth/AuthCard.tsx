@@ -1,12 +1,12 @@
 "use client";
 
 import { FC, FormEvent, Dispatch, SetStateAction } from "react";
-import styles from "./AuthCard.module.css";
 import { useState } from "react";
 import Link from "next/link";
-import ResponseCard from "./ResponseCard";
+import ResponseCard from "../../../components/ResponseCard";
 import { capitalizeString } from "@/utils/formatting";
 import type { ResponseCardData } from "./types";
+import styles from './AuthCard.module.css'
 
 interface Props {
   behavior: (

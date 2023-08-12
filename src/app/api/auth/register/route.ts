@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import UserModel from "@/models/user.model";
 import connectDB from "@/utils/connectDB";
+import { findUser, createUser } from "@/utils/crud";
 import { hashSync as hashPassword } from "bcryptjs";
 
 export async function POST(request: Request) {
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
   const { name, password } = await request.json();
 
   // comprobando que el nombre sea unico
-  const matchingPasswordUsers = await UserModel.findOne({ name });
+  const matchingPasswordUsers = await findUser({ name });
   if (matchingPasswordUsers)
     return NextResponse.json(
       {
@@ -35,8 +36,7 @@ export async function POST(request: Request) {
       name,
       password: hashPassword(password, 12),
     };
-    const user = new UserModel(newUserData);
-    await user.save();
+    const user = createUser(newUserData);
     return NextResponse.json({
       message: {
         text: "New user inserted",

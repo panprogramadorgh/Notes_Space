@@ -1,9 +1,9 @@
 .form {
+  width: 310px;
   text-align: left;
 }
 
 .switchAuthContainer {
-  font-size: var(--regular-font-size);
   display: flex;
   justify-content: center;
   width: 100%;
@@ -41,24 +41,8 @@
 .input,
 .button {
   width: 100%;
-  padding: 7px 16px;
-  border-radius: var(--border-radius);
-  border: none;
-  outline: var(--outline-light);
-  background-color: var(--background-color-light);
-  transition: all 0.15s;
 }
 
 .button {
-  font-weight: var(--subtitle-font-weight);
-  color: var(--text-color-dark);
-  background-color: var(--seccondary-color);
-  outline: none;
   margin-top: 10px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.input:focus {
-  outline: 2px solid var(--main-color);
 }
