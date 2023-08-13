@@ -6,6 +6,7 @@
 import { FC, CSSProperties } from "react";
 import { usePathname } from "next/navigation";
 // components
+import SesionButton from "@/components/SesionButton";
 
 // libs
 
@@ -54,6 +55,12 @@ const Navigation: FC<Props> = ({}) => {
           </li>
         );
       })}
+      <SesionButton style={{
+        position: 'absolute',
+        right: '0',
+        marginBottom: '5px',
+        marginRight: '20px'
+      }} />
     </ul>
   );
 };

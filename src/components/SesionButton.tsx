@@ -3,7 +3,7 @@
 /* Imports */
 
 // react & nextjs
-import { FC, MouseEventHandler } from "react";
+import { useState, CSSProperties, FC, MouseEventHandler } from "react";
 import { useRouter } from "next/navigation";
 // components
 import { Profile } from "@/svg";
@@ -20,9 +20,12 @@ import styles from "@/styles/SesionButton.module.css";
 
 interface Props {
   size?: `${number}px`;
+  style?: CSSProperties;
 }
 
-const SesionButton: FC<Props> = ({ size }) => {
+const SesionButton: FC<Props> = ({ size, style }) => {
+  const [showLabel, setShowLabel] = useState<string>("");
+
   const router = useRouter();
   const handlerClick: MouseEventHandler<HTMLDivElement> = () => {
     const tokenCookie = findCookies()?.token;
@@ -33,14 +36,38 @@ const SesionButton: FC<Props> = ({ size }) => {
     }
     router.push("/auth/login");
   };
+
+  const handlerMouseEnter: MouseEventHandler<HTMLDivElement> = () => {
+    const tokenCookie = findCookies()?.token;
+    if (tokenCookie) {
+      setShowLabel("Logout");
+      return;
+    }
+    setShowLabel("Login");
+  };
+
+  const handleMouseLeave: MouseEventHandler<HTMLDivElement> = () => {
+    setShowLabel("");
+  };
+
+  let styleProp = style;
+  if (size) {
+    styleProp = { ...styleProp, width: size, height: size };
+  }
+
   return (
-    <div
-      style={size && { width: size, height: size }}
-      className={styles.container}
-      onClick={handlerClick}
-    >
-      <Profile className={styles.icon} />
-    </div>
+    <>
+      <div
+        style={styleProp ? styleProp : undefined}
+        className={styles.container}
+        onClick={handlerClick}
+        onMouseEnter={handlerMouseEnter}
+        onMouseLeave={handleMouseLeave}
+      >
+        {showLabel ? <label className={styles.label}>{showLabel}</label> : null}
+        <Profile className={styles.icon} />
+      </div>
+    </>
   );
 };
 

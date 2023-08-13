@@ -13,6 +13,7 @@ export default async function connectDB(): Promise<boolean | undefined> {
     await mongoose.connect(getConnectionString());
     return true;
   } catch (error) {
-    throw false;
+    console.log(error);
+    return false;
   }
 }

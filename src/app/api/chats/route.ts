@@ -5,51 +5,48 @@ import { UserDocument } from "@/models/user.model";
 import { verifyAuth } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
 
-// export async function GET(request: NextRequest) {
-//   // connecting to database
-//   if ((await connectDB()) === false) {
-//     return NextResponse.json(
-//       { error: "Error connecting to database" },
-//       { status: 500 }
-//     );
-//   }
+export async function GET(request: NextRequest) {
+  // connecting to database
+  if ((await connectDB()) === false) {
+    return NextResponse.json(
+      { error: "Error connecting to database" },
+      { status: 500 }
+    );
+  }
 
-//   const token = request.cookies.get("token")?.value;
-//   const verifiedToken =
-//     token && (await verifyAuth(token).catch((error) => console.error(error)));
+  const token = request.cookies.get("token")?.value;
+  const verifiedToken =
+    token && (await verifyAuth(token).catch((error) => console.error(error)));
 
-//   if (!verifiedToken) {
-//     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-//   }
+  if (!verifiedToken) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
 
-//   const user: UserDocument = await findUser({ _id: verifiedToken.userId });
-//   if (!user) {
-//     const response = NextResponse.json({
-//       error: "Your session expired",
-//       sessionExpired: true,
-//     });
-//     response.cookies.delete("token");
-//     return response;
-//   }
-//   try {
-//     const chats: ChatDocument[] = [];
-//     console.log(user.chats);
-//     // chats existe
-//     user.chats.forEach(async (chatId, index) => {
-//       const chat: ChatDocument = await findChat({ _id: chatId });
-//       chats[index] = chat;
-//     });
-//     return NextResponse.json({ chats }, { status: 200 });
-//   } catch (error) {
-//     console.error(error);
-//     if (error instanceof Error) {
-//       return NextResponse.json(
-//         { error: "Could not find a chat" },
-//         { status: 400 }
-//       );
-//     }
-//   }
-// }
+  const user: UserDocument = await findUser({ _id: verifiedToken.userId });
+  if (!user) {
+    const response = NextResponse.json({
+      error: "Your session expired",
+      sessionExpired: true,
+    });
+    response.cookies.delete("token");
+    return response;
+  }
+  try {
+    const chats: ChatDocument[] = [];
+    for (const eachChat in user.chats) {
+      chats[eachChat] = await findChat({ _id: user.chats[eachChat] });
+    }
+    return NextResponse.json({ chats }, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    if (error instanceof Error) {
+      return NextResponse.json(
+        { error: "Could not find a chat" },
+        { status: 400 }
+      );
+    }
+  }
+}
 
 export async function POST(request: NextRequest) {
   // connecting to database

@@ -7,3 +7,23 @@
   width: 100%;
   height: 100%;
 }
+
+.label {
+  position: absolute;
+  top: 55px;
+  display: inline-block;
+  background-color: var(--background-ultradarkcolor-light);
+  padding: 5px;
+  outline: var(--outline-light);
+  border-radius: var(--border-radius);
+  animation: label-fadein 0.15s ease;
+}
+
+@keyframes label-fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

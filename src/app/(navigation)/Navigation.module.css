@@ -1,8 +1,10 @@
 .container {
-  outline: var(--outline-light);
+  display: flex;
+  /* justify-content: space-between; */
+  align-items: flex-end;  outline: var(--outline-light);
   background-color: var(--background-darkcolor-light);
   margin-top: 1px;
-  padding: 30px 0 0 20px;
+  padding: 20px 0 0 20px;
 }
 
 .li {

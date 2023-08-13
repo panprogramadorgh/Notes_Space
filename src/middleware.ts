@@ -13,7 +13,12 @@ export async function middleware(request: NextRequest) {
     (request.nextUrl.pathname.startsWith("/dashboard") ||
       request.nextUrl.pathname.startsWith("/chats"))
   ) {
-    return NextResponse.redirect(new URL("/auth/login", request.url));
+    const target = request.nextUrl.pathname.startsWith("/dashboard")
+      ? "dashboard"
+      : "chats";
+    return NextResponse.redirect(
+      new URL(`/auth/login?target=${target}`, request.url)
+    );
   }
   if (request.nextUrl.pathname === "/auth") {
     return NextResponse.redirect(new URL("/auth/login", request.url));
