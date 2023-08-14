@@ -15,16 +15,16 @@ import axios from "axios";
 // types & interfaces
 import { ResponseCardData } from "@/app/(no navigation)/auth/types";
 import {
-  SuccessPostChatResponse,
-  FailedPostChatResponse,
-} from "@/app/api/chats/types";
+  SuccessPostNoteResponse,
+  FailedPostNoteResponse,
+} from "@/app/api/notes/types";
 
 // css
-import styles from "./CreateChatForm.module.css";
+import styles from "./CreateNoteForm.module.css";
 
 interface Props {}
 
-const CreateChatForm: FC<Props> = ({}) => {
+const CreateNoteForm: FC<Props> = ({}) => {
   const [responseCardData, setResponseCardData] =
     useState<ResponseCardData | null>(null);
 
@@ -33,11 +33,11 @@ const CreateChatForm: FC<Props> = ({}) => {
     const formData: FormData = new FormData(event.currentTarget);
     const postData = { name: formData.get("name") ?? "" };
     try {
-      // posting un nuevo chat
-      const response = await axios.post("/api/chats", postData);
+      // posting un nuevo note
+      const response = await axios.post("/api/notes", postData);
       setResponseCardData({
         success: true,
-        message: (response.data as SuccessPostChatResponse).message,
+        message: (response.data as SuccessPostNoteResponse).message,
         closeCardCallback: () => {
           setResponseCardData(null);
         },
@@ -46,7 +46,7 @@ const CreateChatForm: FC<Props> = ({}) => {
       if (error instanceof axios.AxiosError) {
         setResponseCardData({
           success: false,
-          message: (error.response?.data as FailedPostChatResponse).error,
+          message: (error.response?.data as FailedPostNoteResponse).error,
           closeCardCallback: () => {
             setResponseCardData(null);
           },
@@ -58,7 +58,7 @@ const CreateChatForm: FC<Props> = ({}) => {
     <div className={styles.container}>
       {responseCardData ? <ResponseCard cardData={responseCardData} /> : null}
       <form onSubmit={handleSubmit} className={styles.form}>
-        <label className={styles.label}>Chat name</label>
+        <label className={styles.label}>Note name</label>
         <input className={styles.input} type="text" name="name" />
         <button className={styles.button}>Create</button>
       </form>
@@ -66,4 +66,4 @@ const CreateChatForm: FC<Props> = ({}) => {
   );
 };
 
-export default CreateChatForm;
+export default CreateNoteForm;

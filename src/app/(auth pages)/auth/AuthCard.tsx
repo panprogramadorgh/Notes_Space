@@ -1,12 +1,19 @@
 "use client";
 
-import { FC, FormEvent, Dispatch, SetStateAction } from "react";
-import { useState } from "react";
+import {
+  useState,
+  FC,
+  FormEvent,
+  Dispatch,
+  SetStateAction,
+  useContext,
+} from "react";
+import { ThemeContext } from "@/contexts/ThemeContext";
 import Link from "next/link";
 import ResponseCard from "../../../components/ResponseCard";
 import { capitalizeString } from "@/utils/formatting";
-import type { ResponseCardData } from "./types";
-import styles from './AuthCard.module.css'
+import type { ResponseCardData } from "../../../types/ResponseCardData";
+import styles from "./AuthCard.module.css";
 
 interface Props {
   behavior: (
@@ -17,10 +24,11 @@ interface Props {
 }
 
 const AuthCard: FC<Props> = ({ behavior, type }) => {
+  const { theme } = useContext(ThemeContext)!;
+
   const [responseCardData, setResponseCardData] =
     useState<null | ResponseCardData>(null);
 
-  const actualPath = type;
   const reversePath = type === "login" ? "register" : "login";
 
   const formattedActualPath = capitalizeString(
@@ -42,26 +50,32 @@ const AuthCard: FC<Props> = ({ behavior, type }) => {
       }}
     >
       <div className={styles.titleContainer}>
-        <h3 className={styles.title}>{title}</h3>
+        <h3 className={styles[`title-${theme}`]}>{title}</h3>
       </div>
       <div className={styles.responseContainer}>
         {responseCardData ? <ResponseCard cardData={responseCardData} /> : null}
       </div>
-      <div className={styles.inputsContainer}>
+      <div className={styles[`inputsContainer-${theme}`]}>
         <div className={styles.inputBlock}>
-          <label className={styles.label}>Username</label>
-          <input className={styles.input} type="text" name="name" />
+          <label className={styles[`label-${theme}`]}>Username</label>
+          <input className={styles[`input-${theme}`]} type="text" name="name" />
         </div>
         <div className={styles.inputBlock}>
-          <label className={styles.label}>Password</label>
-          <input className={styles.input} type="password" name="password" />
+          <label className={styles[`label-${theme}`]}>Password</label>
+          <input
+            className={styles[`input-${theme}`]}
+            type="password"
+            name="password"
+          />
         </div>
         <div className={styles.buttonContainer}>
-          <button className={styles.button}>{formattedActualPath}</button>
+          <button className={styles[`button-${type}`]}>
+            {formattedActualPath}
+          </button>
         </div>
       </div>
-      <div className={styles.switchAuthContainer}>
-        <p className={styles.subtitle}>{subtitle}</p>
+      <div className={styles[`switchAuthContainer-${theme}`]}>
+        <p className={styles[`subtitle-${theme}`]}>{subtitle}</p>
         <Link className={styles.link} href={authPathToSwitch}>
           Go to {formattedReversePath}.
         </Link>

@@ -1,7 +1,7 @@
 "use client";
 
 // react y next
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 // components
 import AuthCard from "../AuthCard";
 // libs
@@ -10,10 +10,10 @@ import axios from "axios";
 import { createCookie } from "@/utils/cookies";
 // types & interfaces
 import type { LoginResponse } from "@/app/api/auth/login/types";
+// css
 
 export default function Login() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   return (
     <AuthCard
       type="login"
@@ -41,9 +41,7 @@ export default function Login() {
               value: loginResponse.message!.token,
               maxAge: 86400,
             });
-            const target = searchParams.get("target");
-            if (!target) router.push("/");
-            else router.push(`/${target}`);
+            router.push("/");
           }
         } catch (error) {
           if (error instanceof axios.AxiosError) {

@@ -9,6 +9,7 @@ import AuthCard from "../AuthCard";
 import axios from "axios";
 // types & interfaces
 import type { RegisterResponse } from "@/app/api/auth/register/types";
+// css
 
 export default function Register() {
   const router = useRouter();

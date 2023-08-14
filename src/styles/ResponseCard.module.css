@@ -1,19 +1,32 @@
-.card {
+.card-light,
+.card-dark {
   position: relative;
   font-size: 0.8rem;
-  background-color: #feeded;
+  background-color: var(--wrong-color-light);
   border-radius: 0.5rem;
-  outline: 1px solid rgb(232, 187, 187);
-  color: #000;
+  outline: 1px solid var(--wrong-darkcolor-light);
+  color: var(--text-darkcolor-light);
   padding: 16px;
   padding-right: 35px;
   margin-bottom: 20px;
+  user-select: none;
+}
+.card-dark {
+  color: var(--text-color-dark);
+  background-color: var(--wrong-darkcolor-dark);
+  outline-color: var(--wrong-color-dark);
 }
 
-.cross {
+.cross-light,
+.cross-dark {
   font-size: 1.2rem;
   position: absolute;
   top: 8px;
   right: 8px;
-  color: rgb(242, 121, 121);
+  color: var(--wrong-darkcolor-light);
+  cursor: pointer;
+}
+
+.cross-dark {
+  color: var(--text-color-dark);
 }

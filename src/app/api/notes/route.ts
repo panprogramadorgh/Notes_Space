@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { findUser, createChat, updateUser, findChat } from "@/utils/crud";
-import { ChatDocument } from "@/models/chat.model";
+import { findUser, createNote, updateUser, findNote } from "@/utils/crud";
+import { NoteDocument } from "@/models/note.model";
 import { UserDocument } from "@/models/user.model";
 import { verifyAuth } from "@/utils/auth";
 import connectDB from "@/utils/connectDB";
@@ -32,16 +32,16 @@ export async function GET(request: NextRequest) {
     return response;
   }
   try {
-    const chats: ChatDocument[] = [];
-    for (const eachChat in user.chats) {
-      chats[eachChat] = await findChat({ _id: user.chats[eachChat] });
+    const notes: NoteDocument[] = [];
+    for (const eachNote in user.notes) {
+      notes[eachNote] = await findNote({ _id: user.notes[eachNote] });
     }
-    return NextResponse.json({ chats }, { status: 200 });
+    return NextResponse.json({ notes }, { status: 200 });
   } catch (error) {
     console.error(error);
     if (error instanceof Error) {
       return NextResponse.json(
-        { error: "Could not find a chat" },
+        { error: "Could not find some note" },
         { status: 400 }
       );
     }
@@ -78,30 +78,30 @@ export async function POST(request: NextRequest) {
   const { name } = await request.json();
   try {
     if (!name || name.length < 1 || name.length > 30) {
-      throw new Error("The chat name must have a length between 1 and 30");
+      throw new Error("The note name must have a length between 1 and 30");
     }
 
-    /* Puede causar problemas cuando se busca el chat que dice tener el usurio, en el caso de que se haya borrado de la base de datos */
-    const chats: ChatDocument[] = [];
-    for (const eachChat in user.chats) {
-      chats[eachChat] = await findChat({ _id: user.chats[eachChat] });
+    /* Puede causar problemas cuando se busca el note que dice tener el usurio, en el caso de que se haya borrado de la base de datos */
+    const notes: NoteDocument[] = [];
+    for (const eachNote in user.notes) {
+      notes[eachNote] = await findNote({ _id: user.notes[eachNote] });
     }
     /* */
 
-    const chatNames = chats.map((eachChat) => {
-      return eachChat.name!;
+    const noteNames = notes.map((eachNote) => {
+      return eachNote.name!;
     });
-    if (chatNames.includes(name)) {
-      throw new Error("You already have a chat with that name");
+    if (noteNames.includes(name)) {
+      throw new Error("You already have a note with that name");
     }
-    /* Puede causar problemas al actualizar el usuario y como resultado haber introducido un chat no valido */
-    const newChat = (await createChat({ name })) as ChatDocument;
-    const newChatsUserProperty = [...user.chats, newChat._id];
-    await updateUser({ _id: user._id }, { chats: newChatsUserProperty });
+    /* Puede causar problemas al actualizar el usuario y como resultado haber introducido un note no valido */
+    const newNote = (await createNote({ name })) as NoteDocument;
+    const newNotesUserProperty = [...user.notes, newNote._id];
+    await updateUser({ _id: user._id }, { notes: newNotesUserProperty });
     /* */
 
     return NextResponse.json(
-      { message: "New chat created !", chat: newChat, user },
+      { message: "New note created !", note: newNote, user },
       { status: 200 }
     );
   } catch (error) {

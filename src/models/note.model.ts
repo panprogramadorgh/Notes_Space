@@ -1,12 +1,12 @@
 import { model, models, Schema, InferSchemaType } from "mongoose";
 
-const chatSchema = new Schema({
+const noteSchema = new Schema({
   name: {
     type: String,
-    required: [true, "chat name is required"],
+    required: [true, "note name is required"],
     unique: false,
-    min: [1, "chat name must have 1 char at least"],
-    max: [30, "chat must have under 30 chars"],
+    min: [1, "note name must have 1 char at least"],
+    max: [30, "note must have under 30 chars"],
   },
   messages: {
     type: [
@@ -25,16 +25,16 @@ const chatSchema = new Schema({
         },
       },
     ],
-    unique: false
+    unique: false,
   },
 });
 
-export type Chat = InferSchemaType<typeof chatSchema>;
-export interface ChatDocument extends Chat {
+export type Note = InferSchemaType<typeof noteSchema>;
+export interface NoteDocument extends Note {
   _id: string;
   __v: number;
 }
 
-const ChatModel = models["chat"] ?? model<Chat>("chat", chatSchema, "chats");
+const NoteModel = models["note"] ?? model<Note>("note", noteSchema, "notes");
 
-export default ChatModel;
+export default NoteModel;

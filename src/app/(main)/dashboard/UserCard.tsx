@@ -22,7 +22,7 @@ interface Props {}
 export interface UserCardData {
   id: string;
   name: string;
-  chats: string[];
+  notes: string[];
 }
 
 const fetchUserData = async (): Promise<UserCardData> => {
@@ -32,7 +32,7 @@ const fetchUserData = async (): Promise<UserCardData> => {
   const userCardData: UserCardData = {
     name: userData.name!,
     id: userData._id,
-    chats: userData.chats,
+    notes: userData.notes,
   };
   return userCardData;
 };
@@ -60,8 +60,8 @@ const UserCard: FC<Props> = ({}) => {
         <div className={styles.name}>
           Name - <span>{userCardData.name}</span>
         </div>
-        <div className={styles.chats}>
-          Chats - <span>{JSON.stringify(userCardData.chats)}</span>
+        <div className={styles.notes}>
+          Notes - <span>{JSON.stringify(userCardData.notes)}</span>
         </div>
       </div>
     </div>

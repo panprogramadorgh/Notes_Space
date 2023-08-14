@@ -1,5 +1,5 @@
 import UserModel, { UserDocument } from "@/models/user.model";
-import ChatModel, { ChatDocument } from "@/models/chat.model";
+import NoteModel, { NoteDocument } from "@/models/note.model";
 import { Find, FindOne, Create, Update, Validate } from "./crud.d";
 
 export const findUser: FindOne = async (query) => {
@@ -25,25 +25,25 @@ export const createUser: Create = async (documentData) => {
   return newUser;
 };
 
-export const findChat: FindOne = async (query) => {
-  const chat: ChatDocument | null = (await ChatModel.findOne(
+export const findNote: FindOne = async (query) => {
+  const note: NoteDocument | null = (await NoteModel.findOne(
     query
-  )) as ChatDocument | null;
-  return chat;
+  )) as NoteDocument | null;
+  return note;
 };
 
-export const findChats: Find = async (query) => {
-  const chats: ChatDocument[] = await ChatModel.find(query);
-  return chats;
+export const findNotes: Find = async (query) => {
+  const notes: NoteDocument[] = await NoteModel.find(query);
+  return notes;
 };
 
-export const createChat: Create = async (documentData) => {
+export const createNote: Create = async (documentData) => {
   const { name }: { name: string } = documentData;
-  const newChat = await ChatModel.create({ name });
-  return newChat;
+  const newNote = await NoteModel.create({ name });
+  return newNote;
 };
 
-export const validateChat: Validate = async (documentData) => {
-  const newChat = new ChatModel(documentData);
-  await newChat.validate();
+export const validateNote: Validate = async (documentData) => {
+  const newNote = new NoteModel(documentData);
+  await newNote.validate();
 };

@@ -5,6 +5,7 @@ import { FC } from "react";
 
 // components
 import UserCard from "./UserCard";
+import CreateNoteForm from "./CreateNoteForm";
 
 // libs
 
@@ -20,6 +21,7 @@ const Dashboard: FC<{}> = ({}) => {
     <div className={styles.container}>
       <h1>Dashboard</h1>
       <UserCard />
+      <CreateNoteForm />
     </div>
   );
 };

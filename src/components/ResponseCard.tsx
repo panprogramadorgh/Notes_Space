@@ -1,5 +1,6 @@
-import { FC, CSSProperties } from "react";
-import { ResponseCardData } from "../app/(no navigation)/auth/types";
+import { FC, useContext } from "react";
+import { ThemeContext } from "@/contexts/ThemeContext";
+import { ResponseCardData } from "@/types/ResponseCardData";
 import { Cross } from "@/svg";
 import styles from "@/styles/ResponseCard.module.css";
 
@@ -10,14 +11,21 @@ interface Props {
 const ResponseCard: FC<Props> = ({
   cardData: { message, closeCardCallback, success },
 }) => {
+  const { theme } = useContext(ThemeContext)!;
   return (
     <div
-      className={styles.card}
+      className={styles[`card-${theme}`]}
       style={
         success
           ? {
-              backgroundColor: "#e5ffe0",
-              outlineColor: "#55b844",
+              backgroundColor:
+                theme === "light"
+                  ? "var(--correct-color-light)"
+                  : "var(--correct-darkcolor-dark)",
+              outlineColor:
+                theme === "light"
+                  ? "var(--correct-darkcolor-light)"
+                  : "var(--correct-color-dark)",
             }
           : undefined
       }
@@ -27,11 +35,14 @@ const ResponseCard: FC<Props> = ({
         style={
           success
             ? {
-                color: "#55b844",
+                color:
+                  theme === "light"
+                    ? "var(--correct-darkcolor-light)"
+                    : "var(--text-color-dark)",
               }
             : undefined
         }
-        className={styles.cross}
+        className={styles[`cross-${theme}`]}
         onClick={closeCardCallback}
       />
     </div>

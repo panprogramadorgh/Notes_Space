@@ -1,0 +1,93 @@
+.form {
+  width: 310px;
+  text-align: left;
+}
+
+.switchAuthContainer-light,
+.switchAuthContainer-dark {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 20px;
+  padding: 16px;
+  background-color: var(--background-color-light);
+  border: none;
+  border-radius: var(--border-radius);
+  outline: var(--outline-light);
+}
+
+.switchAuthContainer-dark {
+  background-color: var(--background-darkcolor-dark);
+  outline-color: var(--background-color-dark);
+}
+
+.subtitle-dark {
+  color: var(--text-darkcolor-dark);
+}
+
+.title-dark,
+.title-light {
+  font-size: var(--title-font-size);
+  padding: 15px 0;
+  font-weight: var(--small-font-weight);
+  text-align: center;
+}
+.title-dark {
+  color: var(--text-darkcolor-dark);
+}
+.title-light {
+  color: var(--text-ultradarkcolor-light);
+}
+
+.inputsContainer-light,
+.inputsContainer-dark {
+  background-color: var(--background-darkcolor-light);
+  outline: var(--outline-light);
+  border-radius: 0.3rem;
+  padding: 16px;
+}
+
+.inputsContainer-dark {
+  background-color: var(--background-darkcolor-dark);
+  outline-color: var(--background-color-dark);
+}
+
+.inputBlock {
+  padding: 2px 0 20px 0;
+}
+
+.label-light,
+.label-dark {
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+.label-dark {
+  color: var(--text-darkcolor-dark);
+}
+
+.input-dark,
+.input-light,
+.button {
+  width: 100%;
+}
+
+.input-dark {
+  background-color: var(--background-ultradarkcolor-dark);
+  outline-color: var(--background-color-dark);
+  color: var(--text-color-dark);
+}
+
+.button-login,
+.button-register {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.button-register {
+  background-color: var(--seccondary-color);
+}
+
+.button-register:hover {
+  background-color: var(--seccondary-hovercolor);
+}

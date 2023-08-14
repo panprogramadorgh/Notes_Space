@@ -3,14 +3,33 @@
   --background-darkcolor-light: #f6f8fa;
   --background-ultradarkcolor-light: #e7eaed;
 
+  --background-color-dark: #4c4b51;
+  --background-darkcolor-dark: #37363b;
+  --background-ultradarkcolor-dark: #212023;
+
   --text-color-light: #565656;
-  --text-darkcolor-light: #1d1d1d;
+  --text-darkcolor-light: #353535;
+  --text-ultradarkcolor-light: #1d1d1d;
 
   --text-color-dark: #ffffff;
   --text-darkcolor-dark: #aeaeae;
 
+  --selection-light: #69ffff;
+  --selection-dark: #f0f;
+
   --main-color: #2e7bff;
+  --main-hovercolor: #488bff;
   --seccondary-color: #1f883d;
+  --seccondary-hovercolor: rgb(52, 159, 82);
+  --wrong-color-light: #feeded;
+  --wrong-darkcolor-light: #e8bbbb;
+  --correct-color-light: #e5ffe0;
+  --correct-darkcolor-light: #55b844;
+
+  --wrong-color-dark: rgb(176, 0, 0);
+  --wrong-darkcolor-dark: rgb(113, 0, 0);
+  --correct-color-dark: #1ca600;
+  --correct-darkcolor-dark: #0f6300;
 
   --outline-color-light: #d5d9e1;
   --outline-light: 1px solid var(--outline-color-light);
@@ -27,6 +46,11 @@
   --small-font-weight: 300;
 }
 
+::selection {
+  background-color: #f0f;
+  color: var(--text-darkcolor-light);
+}
+
 * {
   box-sizing: border-box;
   padding: 0;
@@ -40,6 +64,7 @@ body {
 }
 
 body {
+  height: 100vh;
   color: var(--text-color-light);
   background: var(--background-color-light);
   font-size: var(--regular-font-size);
@@ -65,13 +90,18 @@ button {
   transition: outline 0.15s;
 }
 button {
-  background-color: var(--seccondary-color);
+  background-color: var(--main-color);
   outline: none;
   color: var(--text-color-dark);
   font-weight: var(--subtitle-font-weight);
   user-select: none;
   cursor: pointer;
+  transition: background-color 0.15s;
 }
+button:hover {
+  background-color: var(--main-hovercolor);
+}
+
 label {
   font-size: var(--small-font-size);
   font-weight: var(--small-font-size);

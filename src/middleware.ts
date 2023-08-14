@@ -8,18 +8,14 @@ export async function middleware(request: NextRequest) {
 
   const response = NextResponse.next();
 
-  if (
-    !verifiedToken &&
-    (request.nextUrl.pathname.startsWith("/dashboard") ||
-      request.nextUrl.pathname.startsWith("/chats"))
-  ) {
-    const target = request.nextUrl.pathname.startsWith("/dashboard")
-      ? "dashboard"
-      : "chats";
-    return NextResponse.redirect(
-      new URL(`/auth/login?target=${target}`, request.url)
-    );
+  if (verifiedToken && request.nextUrl.pathname === "/") {
+    return NextResponse.redirect(new URL("/dashboard", request.url));
   }
+
+  if (!verifiedToken && request.nextUrl.pathname.startsWith("/dashboard")) {
+    return NextResponse.redirect(new URL(`/auth/login`, request.url));
+  }
+
   if (request.nextUrl.pathname === "/auth") {
     return NextResponse.redirect(new URL("/auth/login", request.url));
   }
@@ -31,5 +27,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/auth/:path*", "/dashboard", "/chats"],
+  matcher: ["/", "/auth/:path*", "/dashboard"],
 };

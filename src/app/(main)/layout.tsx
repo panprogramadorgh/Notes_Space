@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 
 // components
-import Navigation from "./Navigation";
+import SessionButton from "@/components/SesionButton";
 
 const poppins = Poppins({ subsets: ["latin"], weight: ["400", "600", "800"] });
 
@@ -17,8 +17,13 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body className={poppins.className}>
-        <Navigation />
-        <main className={styles.main}>{children}</main>
+        <header>
+          <h1>Dashboard</h1>
+          <SessionButton />
+        </header>
+        <main className={styles.main}>
+          <section>{children}</section>
+        </main>
       </body>
     </html>
   );

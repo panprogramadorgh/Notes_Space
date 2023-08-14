@@ -14,9 +14,9 @@ const userSchema = new Schema({
     unique: false,
     min: [6, "the Password must have 6 characters at least"],
   },
-  chats: {
+  notes: {
     type: [String],
-    required: [true, "user must have chats property"],
+    required: [true, "user must have notes property"],
   },
 });
 
